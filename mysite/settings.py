@@ -75,11 +75,20 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+   'SQL': {
+        'NAME': 'my_database',
+        'ENGINE': 'django.db.backends.postgresql',
+        'USER': 'postgres_user',
+        
+    },
+   'noSQL' : {
+       'NAME' : 'my_database',
+      'ENGINE' : 'django_mongodb_engine',
+      'USER': 'mongo_user'
+   }
 }
+
+
 
 
 # Password validation
