@@ -7,9 +7,7 @@ class Tweets(models.Model):
     location = models.CharField(max_length=30)
     favorite = models.BooleanField(default=False)
     date = models.DateTimeField
-
-class ReTweets(models.Model):
-    text = models.CharField(max_length=300) 
+    rt = models.BooleanField(default=False)
 
 class User(models.Model):
     name = models.CharField(max_length=30)

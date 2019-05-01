@@ -25,7 +25,12 @@ SECRET_KEY = '1q18^ylqzr0s-auh848*k+p=oq5*d%awx&=umh&)6)je+$bsdu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '0.0.0.0'
+ ]
+
 
 
 # Application definition
@@ -75,20 +80,16 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-   'SQL': {
-        'NAME': 'my_database',
-        'ENGINE': 'django.db.backends.postgresql',
-        'USER': 'postgres_user',
-        
-    },
-   'noSQL' : {
-       'NAME' : 'my_database',
-      'ENGINE' : 'django_mongodb_engine',
-      'USER': 'mongo_user'
-   }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': '',
+        'PASSWORD':'',
+        'HOST': 'localhost',
+        'PORT': 5432,
+    }
 }
-
-
+    
 
 
 # Password validation
