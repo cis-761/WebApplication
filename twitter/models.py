@@ -21,3 +21,23 @@ class Flu(models.Model):
 class Symptoms(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=60)
+
+class Trends(models.Model):
+    trend = models.CharField(max_length=100)
+    count = models.IntegerField
+
+class flySymptoms(models.Model):
+    flu_id = models.ForeignKey(Flu, on_delete=models.CASCADE)
+    symptoms_id = models.ForeignKey(Symptoms, on_delete=models.CASCADE)
+
+class tweetFlu(models.Model):
+    tweet_id = models.ForeignKey(Tweets, on_delete=models.CASCADE)
+    flu_id = models.ForeignKey(Flu, on_delete=models.CASCADE)
+
+class userTweets(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    tweet_id = models.ForeignKey(Tweets, on_delete=models.CASCADE)
+
+class tweetTrends(models.Model):
+    tweet_id = models.ForeignKey(Tweets, on_delete=models.CASCADE)
+    trends_id = models.ForeignKey(Trends, on_delete=models.CASCADE)
