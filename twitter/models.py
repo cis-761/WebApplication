@@ -3,24 +3,24 @@ from django.conf import settings
 from django.utils import timezone
 
 class Tweets(models.Model):
-    text = models.CharField(max_length=30)
-    location = models.CharField(max_length=30)
+    text = models.CharField(max_length=5000, default='')
+    location = models.CharField(max_length=5000, default='')
     favorite = models.BooleanField(default=False)
-    date = models.DateTimeField
+    date = models.CharField(max_length=5000, default='')
     rt = models.BooleanField(default=False)
 
 class User(models.Model):
-    name = models.CharField(max_length=30)
-    screen_name = models.CharField(max_length=30)
+    name = models.CharField(max_length=5000)
+    screen_name = models.CharField(max_length=5000)
     geo_enabled = models.BooleanField(default=False)
     verified = models.BooleanField(default=False)
 
 class Flu(models.Model):
-    flu_type = models.CharField(max_length=30)
+    flu_type = models.CharField(max_length=5000)
 
 class Symptoms(models.Model):
-    name = models.CharField(max_length=30)
-    description = models.CharField(max_length=60)
+    name = models.CharField(max_length=5000)
+    description = models.CharField(max_length=5000)
 
 class Trends(models.Model):
     trend = models.CharField(max_length=100)
