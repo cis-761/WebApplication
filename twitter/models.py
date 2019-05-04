@@ -26,7 +26,7 @@ class Trends(models.Model):
     trend = models.CharField(max_length=100)
     count = models.IntegerField
 
-class flySymptoms(models.Model):
+class fluSymptoms(models.Model):
     flu_id = models.ForeignKey(Flu, on_delete=models.CASCADE)
     symptoms_id = models.ForeignKey(Symptoms, on_delete=models.CASCADE)
 
