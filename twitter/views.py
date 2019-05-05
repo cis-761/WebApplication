@@ -28,6 +28,7 @@ def simple_upload(request):
         for i in range(len(col_names)):
             check_names_list.append(col_names[i])
         check_names = tuple(check_names_list)
+        print(check_names)
         if check_names == ('text', 'favorite', 'date', 'rt', 'location'): # we have tweets.csv
              for value in range(csv.shape[0]):
                  col1_val = str(csv.at[value, col_names[0]])
@@ -51,6 +52,12 @@ def simple_upload(request):
                 col2_val = str(csv.at[value, col_names[1]])
                 Symptoms.objects.create(name= col1_val, description=col2_val)
                 print('symptom added ' + str(col1_val))
+        elif check_names == ('Unnamed: 0','user_id', 'tweet_id'): #we have userTweets.csv
+            for value in range(1,csv.shape[0]+1):
+                col1_val = User.objects.get(id=value)
+                col2_val = Tweets.objects.get(id=value)
+                userTweets.objects.create(user_id= col1_val, tweet_id=col2_val)
+                print('userTweets added ' + str(col1_val))
         else: # we have flu.csv
             for value in range(csv.shape[0]):
                 col1_val = str(csv.at[value, col_names[0]])
