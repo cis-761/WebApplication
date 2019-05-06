@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 import pandas as pd
 from .models import Tweets
 from .models import User
@@ -9,12 +10,64 @@ from .models import fluSymptoms
 from .models import tweetFlu
 from .models import userTweets
 from .models import tweetTrends
+import re
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
+from matplotlib.dates import DateFormatter
 
 # Create your views here.
 
 
 def tweets_list(request):
-    return render(request, 'twitter/tweets_list.html', {})
+    if request.method == 'POST':
+        all_entries = Tweets.objects.all()
+        flu_related = []
+        flushot_related = []
+        sick_related = []
+        ill_related = []
+        cold_related = []
+        infleunza_related = []
+        for i in all_entries:
+            if word_in_text('flu', i.text):
+                flu_related.append(i)
+            if word_in_text('flushot', i.text):
+                flushot_related.append(i)
+            if word_in_text('sick', i.text):
+                sick_related.append(i)
+            if word_in_text('ill', i.text):
+                ill_related.append(i)
+            if word_in_text('cold', i.text):
+                cold_related.append(i)
+            if word_in_text('influenza', i.text):
+                infleunza_related.append(i)
+        count_flu = len(flu_related)
+        count_flushot = len(flushot_related)
+        count_sick = len(sick_related)
+        count_ill = len(ill_related)
+        count_cold = len(cold_related)
+        count_influenza = len(infleunza_related)
+        print("Total count of occurences of keyword flu: " + str(count_flu))
+        print("Total count of occurences of keyword flushot: " + str(count_flushot))
+        print("Total count of occurences of keyword sick: " + str(count_sick))
+        print("Total count of occurences of keyword ill: " + str(count_ill))
+        print("Total count of occurences of keyword cold: " + str(count_cold))
+        print("Total count of occurences of keyword influenza: " + str(count_influenza))
+        master_list = [count_flu, count_flushot, count_sick, count_ill, count_cold, count_influenza]
+        fig=Figure()
+        ax=fig.add_subplot(111)
+        x= ['flu', 'flushot', 'sick', 'ill', 'cold', 'influenza']
+        y = master_list
+        ax.bar(x,y)
+        ax.set_title("Count of Tweets per Keyword")
+        ax.set_xlabel("Keywords")
+        ax.set_ylabel("Number of tweets")
+        canvas=FigureCanvas(fig)    
+        fig.savefig('twitter/static/images/graph.png')
+        #canvas.print_png(response)
+        #return redirect('results')
+        return render(request, 'twitter/tweets_list.html', {})
+    else:
+        return render(request, 'twitter/tweets_list.html', {})
 
 def simple_upload(request):
     if request.method == 'POST':
@@ -66,3 +119,12 @@ def simple_upload(request):
             
             
     return render(request, 'twitter/simple_upload.html', {})
+
+# checks if word is in text
+def word_in_text(word, text):
+    word = word.lower()
+    text = text.lower()
+    match = re.search(word, text)
+    if match:
+        return True
+    return False

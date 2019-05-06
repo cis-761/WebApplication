@@ -41,6 +41,11 @@
   	<header>Header</header>
     <main class="content">
     <article>Article</article>
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <button type="submit">Analyze</button>
+</form>
+
     </main>
   	<footer>Footer</footer>
   </div>
