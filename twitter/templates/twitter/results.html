@@ -1,3 +1,40 @@
+<!doctype html>
+<title>Twitter Analytics</title>
+<style>
+  * {
+    box-sizing: border-box; 
+  }
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: row;
+    margin: 0;
+  }
+  .col-1 {
+    background: #D7E8D4;
+    flex: 1;
+  }
+  .col-2 {
+    display: flex;
+    flex-direction: column;
+    flex: 5;
+  }
+  .content {
+    display: flex;
+    flex-direction: row;
+  }
+  .content > article {
+    flex: 4;
+    min-height: 60vh;
+  }
+  header, footer {
+    background: yellowgreen;
+    height: 20vh;
+  }
+  header, footer, article, nav {
+    padding: 1em;
+  }
+
 </style>
 <body>
   <nav class="col-1">Nav</nav>
@@ -5,10 +42,9 @@
   	<header>Header</header>
     <main class="content">
     <article>Article</article>
-    <form method="post" enctype="multipart/form-data">
-    
-</form>
-
+    <h2>HTML Image</h2>
+    {% load static %}
+    <img src="{% static '/admin/img/graph.png' %}" alt="My image">
     </main>
   	<footer>Footer</footer>
   </div>

@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import redirect 
+from django.conf import settings as djangoSettings
 import pandas as pd
 from .models import Tweets
 from .models import User
@@ -62,10 +64,9 @@ def tweets_list(request):
         ax.set_xlabel("Keywords")
         ax.set_ylabel("Number of tweets")
         canvas=FigureCanvas(fig)    
-        fig.savefig('twitter/static/images/graph.png')
-        #canvas.print_png(response)
-        #return redirect('results')
-        return render(request, 'twitter/tweets_list.html', {})
+        path = djangoSettings.STATIC_ROOT 
+        fig.savefig(path + '/admin/img/graph.png')
+        return redirect('results')
     else:
         return render(request, 'twitter/tweets_list.html', {})
 
@@ -119,6 +120,9 @@ def simple_upload(request):
             
             
     return render(request, 'twitter/simple_upload.html', {})
+
+def results(request):
+    return render(request, 'twitter/results.html', {})
 
 # checks if word is in text
 def word_in_text(word, text):
