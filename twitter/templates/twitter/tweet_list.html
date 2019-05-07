@@ -1,0 +1,12 @@
+
+{% block content %}
+  <form method="get">
+    {{ filter.form.as_p }}
+    <button type="submit">Search</button>
+  </form>
+  <ul>
+  {% for tweet in filter.qs %}
+    <li>{{ tweet.text }} - {{ tweet.location }} - {{ tweet.favorite }} - {{ tweet.date }} - {{ tweet.rt }} </li>
+  {% endfor %}
+  </ul>
+{% endblock %}

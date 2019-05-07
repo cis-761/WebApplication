@@ -18,10 +18,10 @@ from matplotlib.figure import Figure
 from matplotlib.dates import DateFormatter
 from django.contrib.auth import login as auth_login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from .filters import UserFilter
+from .filters import TweetFilter
 
 # Create your views here.
-
 
 def tweets_list(request):
     if request.method == 'POST':
@@ -158,3 +158,13 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, '/twitter/register.html', {'form': form})
+
+def search(request):
+    user_list = User.objects.all()
+    user_filter = UserFilter(request.GET, queryset=user_list)
+    return render(request, 'twitter/user_list.html', {'filter': user_filter})
+
+def tweet_search(request):
+    tweet_list = Tweets.objects.all()
+    tweet_filter = TweetFilter(request.GET, queryset=tweet_list)
+    return render(request, 'twitter/tweet_list.html', {'filter': tweet_filter})

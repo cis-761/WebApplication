@@ -13,6 +13,8 @@ urlpatterns = [
 normalpatterns = [
         url(r'^login/', auth_views.LoginView,{'template_name': 'login.html'}, name ='login'),
          url(r'^register/', views.register,name ='register' ),
+         url(r'^search/$', views.search, name='search'),
+         url(r'^tweet_search/$', views.tweet_search, name='tweet_search'),
 ]
 
 urlpatterns += normalpatterns
