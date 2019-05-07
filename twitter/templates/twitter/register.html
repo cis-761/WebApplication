@@ -1,0 +1,20 @@
+<!doctype html>
+{% load staticfiles %}
+{% block content %}
+    <div class="grid-x grid-padding-x align-center">
+            <a href="/login">   Login /</a>
+            <a href="/register"> Register</a>
+    </div>
+<div class="grid-x grid-padding-x align-center">
+    <div class="small-6 cell">
+    <form class="log-in-form" method="post" >
+    <h4 class="text-center">Register</h4>
+    {% csrf_token %}
+        {{ form.as_p }}
+  <p>
+      <input type="submit" class="button expanded" name='register' value="Register"></input> 
+  </p>
+</form>
+</div>
+</div>
+{% endblock %}
