@@ -90,7 +90,11 @@ DATABASES = {
         'PASSWORD':'',
         'HOST': 'localhost',
         'PORT': 5432,
-    }
+    },
+     'nosql': {
+      'ENGINE': 'djongo',
+      'NAME': 'Twitter-Text-Mining',
+   }
 }
     
 
