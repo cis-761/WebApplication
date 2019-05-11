@@ -20,11 +20,15 @@ from django.contrib.auth import login as auth_login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from .filters import UserFilter
 from .filters import TweetFilter
+import time
+from .mongo import aggregation
+
 
 # Create your views here.
 
 def tweets_list(request):
     if request.method == 'POST':
+        s = time.time()
         all_entries = Tweets.objects.all()
         flu_related = []
         flushot_related = []
@@ -69,6 +73,8 @@ def tweets_list(request):
         canvas=FigureCanvas(fig)    
         path = djangoSettings.STATIC_ROOT 
         fig.savefig(path + '/admin/img/graph.png')
+        e = time.time()
+        print(e-s)
         return redirect('results')
     else:
         return render(request, 'twitter/tweets_list.html', {})
@@ -168,3 +174,11 @@ def tweet_search(request):
     tweet_list = Tweets.objects.all()
     tweet_filter = TweetFilter(request.GET, queryset=tweet_list)
     return render(request, 'twitter/tweet_list.html', {'filter': tweet_filter})
+
+def mongo(request):
+    if request.method == 'POST':
+        aggregation()
+        return render(request, 'twitter/mongo.html')
+    else:
+        return render(request, 'twitter/mongo.html')
+
