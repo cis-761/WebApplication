@@ -178,7 +178,9 @@ def tweet_search(request):
 def mongo(request):
     if request.method == 'POST':
         aggregation()
-        return render(request, 'twitter/mongo.html')
+        return redirect('mongo_results')
     else:
         return render(request, 'twitter/mongo.html')
 
+def mongo_results(request):
+    return render(request, 'twitter/mongo_results.html', {})
