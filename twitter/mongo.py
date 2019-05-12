@@ -44,5 +44,5 @@ def aggregation():
     e = time.time()
     print(e-s)
 
-aggregation()
+
 
