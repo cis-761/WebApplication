@@ -77,7 +77,7 @@ def tweets_list(request):
         print(e-s)
         return redirect('results')
     else:
-        return render(request, 'twitter/tweets_list.html', {})
+        return render(request, 'twitter/index.html', {})
 
 def simple_upload(request):
     if request.method == 'POST':
@@ -184,3 +184,65 @@ def mongo(request):
 
 def mongo_results(request):
     return render(request, 'twitter/mongo_results.html', {})
+
+def t_cluster(request):
+    return render(request, 'twitter/t-sne-cluster.html' )
+
+def idm(request):
+    return render(request, 'twitter/intertopic-distance-map.html')
+
+def graphs(request):
+    return render(request, 'twitter/graphs.html')
+
+def postgresql(request):
+    if request.method == 'POST':
+        s = time.time()
+        all_entries = Tweets.objects.all()
+        flu_related = []
+        flushot_related = []
+        sick_related = []
+        ill_related = []
+        cold_related = []
+        infleunza_related = []
+        for i in all_entries:
+            if word_in_text('flu', i.text):
+                flu_related.append(i)
+            if word_in_text('flushot', i.text):
+                flushot_related.append(i)
+            if word_in_text('sick', i.text):
+                sick_related.append(i)
+            if word_in_text('ill', i.text):
+                ill_related.append(i)
+            if word_in_text('cold', i.text):
+                cold_related.append(i)
+            if word_in_text('influenza', i.text):
+                infleunza_related.append(i)
+        count_flu = len(flu_related)
+        count_flushot = len(flushot_related)
+        count_sick = len(sick_related)
+        count_ill = len(ill_related)
+        count_cold = len(cold_related)
+        count_influenza = len(infleunza_related)
+        print("Total count of occurences of keyword flu: " + str(count_flu))
+        print("Total count of occurences of keyword flushot: " + str(count_flushot))
+        print("Total count of occurences of keyword sick: " + str(count_sick))
+        print("Total count of occurences of keyword ill: " + str(count_ill))
+        print("Total count of occurences of keyword cold: " + str(count_cold))
+        print("Total count of occurences of keyword influenza: " + str(count_influenza))
+        master_list = [count_flu, count_flushot, count_sick, count_ill, count_cold, count_influenza]
+        fig=Figure()
+        ax=fig.add_subplot(111)
+        x= ['flu', 'flushot', 'sick', 'ill', 'cold', 'influenza']
+        y = master_list
+        ax.bar(x,y)
+        ax.set_title("Count of Tweets per Keyword")
+        ax.set_xlabel("Keywords")
+        ax.set_ylabel("Number of tweets")
+        canvas=FigureCanvas(fig)    
+        path = djangoSettings.STATIC_ROOT 
+        fig.savefig(path + '/admin/img/graph.png')
+        e = time.time()
+        print(e-s)
+        return redirect('results')
+    else:
+        return render(request, 'twitter/postgresql.html', {})

@@ -9,6 +9,10 @@ urlpatterns = [
     path('simple_upload/', views.simple_upload, name='simple_upload'),
     path('results/', views.results, name='results'),
     path('mongo_results/', views.mongo_results, name='mongo_results'),
+    path('t-sne-cluster/', views.t_cluster, name='t_cluster'),
+    path('intertopic-distance-map/', views.idm, name='idm'), 
+    path('graphs/', views.graphs, name='graphs'), 
+    path('postgresql/', views.postgresql, name='postgresql'), 
 ]
 
 normalpatterns = [
